@@ -1,30 +1,17 @@
-export interface InfoPrProps {
+export interface MainPrProps {
+	ownerRepo: string;
+	nameRepo: string;
+}
+export interface InfoPrProps extends MainPrProps {
 	repository: Repository;
 }
 
 export interface Repository {
-	pullRequest: PullRequest;
+	url: string;
+	name: string;
+	pullRequests: PullRequests;
 }
 
-export interface PullRequest {
-	commits: Comments;
-	comments: Comments;
-	reviews: Comments;
-}
-
-export interface Comments {
-	edges: Edge[];
-}
-
-export interface Edge {
-	node: Node;
-}
-
-export interface Node {
-	commit: Commit;
-}
-
-export interface Commit {
-	oid: string;
-	message: string;
+export interface PullRequests {
+	nodes: any[];
 }
