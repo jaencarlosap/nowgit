@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import Router from 'next/router'
+import { IncomingMessage } from "http"
+import { getSession } from "next-auth/react"
 import { ItemRepositorie, TextField } from "components"
 import { getInfoPr, getAccess } from "services"
 import { InfoPrProps, MainPrProps } from "interfaces/infoPr"
 
-const listRepositories = () => {
+const Dashboard = () => {
 	const test = [
 		{
 			"ownerRepo": "smu-chile",
@@ -376,7 +378,7 @@ const listRepositories = () => {
 	console.log({ listRepos })
 
 	return (
-		<main className="flex min-h-screen w-full flex-1 flex-col px-10 pt-20">
+		<div className="flex w-full flex-1 flex-col px-10">
 			<form className="flex space-x-5" onSubmit={handleSaveParams}>
 				<TextField name="ownerRepo" label="Owner repo" />
 				<TextField name="nameRepo" label="Name repo" />
@@ -389,8 +391,17 @@ const listRepositories = () => {
 					return <ItemRepositorie data={repo} key={index} />
 				})}
 			</section>
-		</main >
+		</div >
 	)
 }
 
-export default listRepositories
+export async function getServerSideProps({ req }: any) {
+	const user2 = await getSession({ req })
+	console.log({ user2 })
+	return {
+		props: {}, // will be passed to the page component as props
+	}
+}
+
+
+export default Dashboard

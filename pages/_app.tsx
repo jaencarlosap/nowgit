@@ -1,14 +1,37 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Footer, Header } from 'components'
+import { Session } from 'next-auth'
+import { SessionProvider } from "next-auth/react"
+import {
+  Footer,
+  Header,
+  Navbar
+} from 'components'
+import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export interface CustomAppProps extends AppProps {
+  pageProps: {
+    session: Session
+  }
+}
+
+function MyApp({
+  Component,
+  pageProps: {
+    session,
+    ...pageProps
+  }
+}: CustomAppProps) {
   return (
-    <>
+    <SessionProvider session={session}>
       <Header />
-      <Component {...pageProps} />
-      <Footer />
-    </>
+      <main className='flex flex-col'>
+        <Navbar />
+        <div className='py-16'>
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+      </main>
+    </SessionProvider>
   )
 }
 
