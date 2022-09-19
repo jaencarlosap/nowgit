@@ -1,17 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
+import { setAccess } from "services"
 
 export default async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
 	const session = await unstable_getServerSession(req, res, authOptions)
 
-	if (session) {
-		res.send({
-			content:
-				"This is protected content. You can access this content because you are signed in.",
-		})
-	} else {
-		res.send({
+	if (session?.accessToken) {
+		//temporal env --- start
+		setAccess(session.accessToken as string)
+		//temporal env --- end
+	}
+
+	if (!session) {
+		return res.send({
 			error: "You must be signed in to view the protected content on this page.",
 		})
 	}

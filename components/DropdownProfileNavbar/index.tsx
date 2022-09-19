@@ -13,12 +13,12 @@ export const DropdownProfileNavbar = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const hasSession = status === "authenticated"
 
-	const handleOpen = () => {
+	const handleOpen = async () => {
 		if (hasSession) setIsOpen(!isOpen)
-		if (!hasSession) signIn()
+		if (!hasSession) await signIn(undefined, { callbackUrl: '/dashboard' })
 	}
 
-	const handleLogout = () => signOut()
+	const handleLogout = async () => await signOut({ callbackUrl: '/' })
 
 	return (
 		<div className="flex flex-col items-center justify-center md:order-2">
@@ -50,7 +50,9 @@ export const DropdownProfileNavbar = () => {
 							</Link>
 						</li>
 						<li onClick={handleLogout}>
-							<span className="block py-2 px-4 text-sm text-red-400 hover:bg-gray-100">Sign out</span>
+							<Link href='/'>
+								<a className="block py-2 px-4 text-sm text-red-400 hover:bg-gray-100">Sign out</a>
+							</Link>
 						</li>
 					</ul>
 				</div>

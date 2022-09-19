@@ -5,19 +5,27 @@ query($owner:String!, $name:String!){
     repository(owner: $owner, name: $name) {
         url
         name
-        pullRequests(first:100,states:OPEN){
+        refs(first: 100, refPrefix: "refs/heads/") {
+            nodes {
+                name
+                branchProtectionRule {
+                    requiredApprovingReviewCount
+                }
+            }
+        }
+        pullRequests( first:100, states:OPEN ){
             nodes{
                     author{
                         login
                     }
                     title
-                    isDraft
+                    isDraft 
                     mergeable
                     createdAt
-                    reviewThreads(first:50){
+                    reviewThreads( first:50 ){
                         nodes{
                             isResolved
-                            comments(first:50){
+                            comments( first:50 ){
                                 nodes{
                                     author{
                                         login
