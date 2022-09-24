@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
-import Router from 'next/router'
-import { Icons, ItemRepositorie, SelectField } from "components"
-import { InfoPrProps, MainPrProps } from "interfaces/infoPr"
-import { getInfoPr } from "services"
+import React, { useEffect, useState } from 'react'
+import { Icons, ItemRepositorie, SelectField } from 'components'
+import { InfoPrProps, MainPrProps } from 'interfaces/infoPr'
 
 const Dashboard = () => {
 	const [selectData, setSelectData] = useState<{ value: string; label: string; }[]>([])
