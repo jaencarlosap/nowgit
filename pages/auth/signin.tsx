@@ -1,7 +1,7 @@
-import { getCsrfToken, getProviders } from "next-auth/react";
-import { useRouter } from "next/router";
-import { IncomingMessage } from "http";
-import { Icons } from "components";
+import { getCsrfToken, getProviders } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { IncomingMessage } from 'http'
+import { Icons } from 'components'
 
 const Signin = ({ providersData, csrfTokenData }: any) => {
 	const { query } = useRouter()
@@ -15,7 +15,7 @@ const Signin = ({ providersData, csrfTokenData }: any) => {
 				{Object.keys(providersData).map((providerKey, key) => (
 					<div key={key} className="mt-4 p-2 w-50 max-w-md rounded-lg shadow-md bg-white hover:bg-gray-100">
 						{
-							providersData[providerKey].type !== "credentials" && (
+							providersData[providerKey].type !== 'credentials' && (
 								<form action={providersData[providerKey].signinUrl} method="POST">
 									<input type="hidden" name="csrfToken" value={csrfTokenData} />
 									{providersData[providerKey].callbackUrl && (

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { unstable_getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import { setAccess } from "services"
+import { unstable_getServerSession } from 'next-auth/next'
+import { authOptions } from './auth/[...nextauth]'
+import { setAccess } from 'services'
 
 export default async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
 	const session = await unstable_getServerSession(req, res, authOptions)
@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
 
 	if (!session) {
 		return res.send({
-			error: "You must be signed in to view the protected content on this page.",
+			error: 'You must be signed in to view the protected content on this page.'
 		})
 	}
 }

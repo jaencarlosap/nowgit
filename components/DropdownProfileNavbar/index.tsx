@@ -1,17 +1,17 @@
-import Link from "next/link"
-import { useState } from "react"
+import Link from 'next/link'
+import { useState } from 'react'
 import {
 	useSession,
 	signIn,
 	signOut
-} from "next-auth/react"
-import { Icons } from "components"
+} from 'next-auth/react'
+import { Icons } from 'components'
 
 
 export const DropdownProfileNavbar = () => {
 	const { status, data } = useSession()
 	const [isOpen, setIsOpen] = useState(false)
-	const hasSession = status === "authenticated"
+	const hasSession = status === 'authenticated'
 
 	const handleOpen = async () => {
 		if (hasSession) setIsOpen(!isOpen)

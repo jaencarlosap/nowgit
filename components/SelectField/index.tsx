@@ -11,10 +11,10 @@ export const SelectField = (selectProps: Props) => {
 			}
 		}),
 		singleValue: (provided: any, state: any) => {
-			const opacity = state.isDisabled ? 0.5 : 1;
+			const opacity = state.isDisabled ? 0.5 : 1
 			// const transition = 'opacity 300ms';
 
-			return { ...provided, opacity };
+			return { ...provided, opacity }
 		}
 	}
 

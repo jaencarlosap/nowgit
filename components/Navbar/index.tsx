@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { DropdownProfileNavbar } from "components"
+import Link from 'next/link'
+import { DropdownProfileNavbar } from 'components'
 
 export const Navbar = () => {
 	return (

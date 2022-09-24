@@ -1,5 +1,5 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import NextAuth, { NextAuthOptions } from 'next-auth'
+import GithubProvider from 'next-auth/providers/github'
 
 const clientId = process.env.GITHUB_ID || ''
 const clientSecret = process.env.GITHUB_SECRET || ''
@@ -12,9 +12,9 @@ export const authOptions: NextAuthOptions = {
 			clientSecret,
 			authorization: {
 				params: {
-					scope: 'repo read:org read:project read:user user:email',
-				},
-			},
+					scope: 'repo read:org read:project read:user user:email'
+				}
+			}
 		})
 	],
 	callbacks: {

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 const Home: NextPage = () => {
   const { status } = useSession()
   const router = useRouter()
-  const isLogin = status === "authenticated"
+  const isLogin = status === 'authenticated'
   const textDescription = isLogin ? 'go to dashboard' : 'Sign in'
 
   const handleRedirect = () => {

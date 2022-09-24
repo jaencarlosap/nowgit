@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from 'react'
 
 export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 	name: string;

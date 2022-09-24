@@ -2,8 +2,8 @@ import {
 	Card,
 	ItemPullRequest,
 	Icons
-} from "components"
-import { InfoPrProps } from "interfaces/infoPr"
+} from 'components'
+import { InfoPrProps } from 'interfaces/infoPr'
 
 export const ItemRepositorie = ({ data }: { data: InfoPrProps }) => {
 	const repository = data.repository
@@ -37,7 +37,7 @@ export const ItemRepositorie = ({ data }: { data: InfoPrProps }) => {
 					<a
 						href={urlRepo}
 						target="_blank"
-						className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-black rounded-lg focus:ring-4 focus:outline-none hover:bg-slate-800"
+						className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-black rounded-lg focus:ring-4 focus:outline-none hover:bg-slate-800" rel="noreferrer"
 					>
 						Go to repositorie
 						<Icons name="ArrowRight" />
