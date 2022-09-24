@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Router from 'next/router'
-import { ItemRepositorie, SelectField } from "components"
+import { Icons, ItemRepositorie, SelectField } from "components"
 import { InfoPrProps, MainPrProps } from "interfaces/infoPr"
 import { getInfoPr } from "services"
 
@@ -9,7 +9,8 @@ const Dashboard = () => {
 	const [listRepos, setListRepos] = useState<InfoPrProps[]>([])
 	const [selectedOption, setSelectedOption] = useState<unknown>(null)
 
-	const handleSaveParams = async (event: React.MouseEvent) => {
+	const handleSaveParams = async () => {
+		if (!selectedOption) return null
 		const repositorieValue = (selectedOption as { value: string; }).value.split('/')
 		const dataToQuery = { ownerRepo: repositorieValue[0], nameRepo: repositorieValue[1] }
 		const { repository } = await getDataToList(dataToQuery)
@@ -53,18 +54,21 @@ const Dashboard = () => {
 
 	return (
 		<div className="flex w-full flex-1 flex-col px-10">
-			<div className="flex space-x-5 w-1/3">
+			<div className="flex space-x-5 w-1/3 mb-4 items-end">
 				<SelectField
 					isSearchable
 					placeholder="Select one repositorie"
 					onChange={setSelectedOption}
 					options={selectData}
 				/>
-				<button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" onClick={handleSaveParams}>
-					Add
+				<button
+					className="fill-white focus:outline-none rounded-full p-2 md:mr-0 bg-blue-600 hover:bg-blue-700"
+					onClick={handleSaveParams}
+				>
+					<Icons name="Add" />
 				</button>
 			</div>
-			<section className="flex flex-wrap">
+			<section className="flex flex-wrap justify-center">
 				{listRepos.length === 0 && (
 					<div className="flex-row w-full p-6 text-center">
 						<p className="text-4xl font-bold text-blue-400 hover:text-blue-700">

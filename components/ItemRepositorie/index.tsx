@@ -8,12 +8,14 @@ import { InfoPrProps } from "interfaces/infoPr"
 export const ItemRepositorie = ({ data }: { data: InfoPrProps }) => {
 	const repository = data.repository
 	const urlRepo = repository.url
-	const pullRequests = repository.pullRequests.nodes.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+	const pullRequests = repository.pullRequests.nodes.sort((a, b) => {
+		return a.getTime() - b.getTime()
+	})
 
 	return (
-		<div className="flex flex-auto pt-10">
-			<Card>
-				<h5 className="text-4xl font-bold tracking-tight text-gray-900">
+		<div className="min-w-lg max-w-lg w-full">
+			<Card className="m-2 p-3 ">
+				<h5 className="text-3xl font-bold tracking-tight text-gray-900">
 					<span className="block text-blue-600 xl:inline">{data.ownerRepo} / </span>
 					<span className="block xl:inline">{data.nameRepo}</span>
 				</h5>

@@ -19,7 +19,7 @@ export const ItemPullRequest = ({
 	const colorToStatusComments = hasCommentsUnResolve === 0 ? 'text-green-400' : 'text-orange-400'
 
 	return (
-		<div className="pb-2 divide-y divide-y-reverse divide-slate-400">
+		<div className="pb-2 divide-y divide-y-reverse divide-slate-400 w-auto">
 			<h5 className="text-1xl font-bold tracking-tight text-gray-900">
 				{isDraft &&
 					<span className="block text-zinc-400 xl:inline">Draft - </span>

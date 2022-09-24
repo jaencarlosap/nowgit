@@ -7,6 +7,10 @@ export interface getInfoPrProps {
 	name: string;
 }
 
-export const getInfoPr = async (props: getInfoPrProps): Promise<InfoPrProps> => {
-	return await graphQLClient.request(query, props);
+export const getInfoPr = async (props: getInfoPrProps): Promise<InfoPrProps | { error: unknown }> => {
+	try {
+		return await graphQLClient.request(query, props);
+	} catch (error) {
+		return { error }
+	}
 }
