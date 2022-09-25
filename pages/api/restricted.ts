@@ -3,7 +3,7 @@ import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from './auth/[...nextauth]'
 import { setAccess } from 'services'
 
-export default async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
+const Restricted = async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
 	const session = await unstable_getServerSession(req, res, authOptions)
 
 	if (session?.accessToken) {
@@ -18,3 +18,5 @@ export default async (req: NextApiRequest, res: NextApiResponse<unknown>) => {
 		})
 	}
 }
+
+export default Restricted
