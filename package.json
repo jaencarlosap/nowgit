@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "devPreinstall": "husky install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint --fix --no-error-on-unmatched-pattern --ext .js, .jsx, .ts, .tsx ./"
   },
   "dependencies": {
     "eslint-config-next": "^12.3.1",

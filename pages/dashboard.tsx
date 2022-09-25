@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Icons, ItemRepositorie, SelectField } from 'components'
+import {
+	Icons,
+	ItemRepositorie,
+	SelectField
+} from 'components'
 import { InfoPrProps, MainPrProps } from 'interfaces/infoPr'
 
 const Dashboard = () => {
@@ -17,10 +21,7 @@ const Dashboard = () => {
 		setSelectedOption(null)
 		setListRepos((beforeList) => ([
 			...beforeList,
-			{
-				...dataToQuery,
-				repository
-			}
+			{ ...dataToQuery, repository }
 		]))
 	}
 

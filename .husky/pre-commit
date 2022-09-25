@@ -1,3 +1,5 @@
-eslint --fix --no-error-on-unmatched-pattern --ext .js --ext .jsx  --ext .ts --ext tsx  ./*
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-git status
+pnpm lint
+git add . -p
