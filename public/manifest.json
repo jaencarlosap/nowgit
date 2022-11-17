@@ -1,6 +1,12 @@
 {
 	"name": "Nowgit",
 	"short_name": "Nowgit",
+	"theme_color": "#FFFFFF",
+	"background_color": "#FFFFFF",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "portrait",
 	"icons": [
 		{
 			"src": "/icons/android-chrome-192x192.png",
@@ -8,10 +14,5 @@
 			"type": "image/png",
 			"purpose": "any maskable"
 		}
-	],
-	"theme_color": "#FFFFFF",
-	"background_color": "#FFFFFF",
-	"start_url": "/",
-	"display": "standalone",
-	"orientation": "portrait"
+	]
 }
