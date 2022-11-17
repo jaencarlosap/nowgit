@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import {
 	Icons,
 	ItemRepositorie,
-	SelectField
+	SelectField,
+	SelectRepositorie
 } from 'components'
 import { InfoPrProps, MainPrProps } from 'interfaces/infoPr'
 
-const Dashboard = () => {
+export const Dashboard = () => {
 	const [selectData, setSelectData] = useState<{ value: string; label: string; }[]>([])
 	const [listRepos, setListRepos] = useState<InfoPrProps[]>([])
 	const [selectedOption, setSelectedOption] = useState<unknown>(null)
@@ -67,18 +68,8 @@ const Dashboard = () => {
 					<Icons name="Add" />
 				</button>
 			</div>
-			<section className="flex flex-wrap justify-center">
-				{listRepos.length === 0 && (
-					<div className="flex-row w-full p-6 text-center">
-						<p className="text-4xl font-bold text-blue-400 hover:text-blue-700">
-							Select your favorite repositories
-						</p>
-						<p className="text-neutral-400 text-2lg ">
-							Remember that your current selection will be saved locally, but this will be temporary 😉
-						</p>
-						<p className="text-4xl"> 🚀 🌝 </p>
-					</div>
-				)}
+			<section className="flex flex-wrap">
+				{listRepos.length === 0 && <SelectRepositorie />}
 				{listRepos.map((repo, index) => {
 					return <ItemRepositorie data={repo} key={index} />
 				})}
@@ -86,5 +77,3 @@ const Dashboard = () => {
 		</div >
 	)
 }
-
-export default Dashboard

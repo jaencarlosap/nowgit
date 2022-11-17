@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getInfoPr } from 'services'
 import restricted from '../restricted'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const getRepositories = async (req: NextApiRequest, res: NextApiResponse) => {
 	await restricted(req, res)
 	const { owner, name } = req.query as { owner: string, name: string }
 
@@ -13,3 +13,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 	return res.json({ error: 'without data' })
 }
+
+export default getRepositories
