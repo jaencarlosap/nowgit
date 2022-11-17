@@ -11,7 +11,6 @@ const Signin = ({ providersData }: any) => {
 				{Object.keys(providersData).map((providerKey, key) => (
 					<div key={key} className="mt-4 p-2 w-50 max-w-md rounded-lg shadow-md bg-white hover:bg-gray-100">
 						{providersData[providerKey].type !== 'credentials' && (
-
 							<button onClick={() => signIn(providersData[providerKey].id)} className="w-100 flex px-2">
 								Sign in with {providersData[providerKey].name}
 								<span className="ml-2">
