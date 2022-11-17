@@ -14,7 +14,7 @@ export const Welcome = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen w-full flex-1 flex-col items-center justify-center">
+		<div className="flex min-h-screen w-full flex-1 flex-col items-center justify-center p-6">
 			<h1 className="text-6xl font-bold">
 				Welcome to Nowgit
 			</h1>

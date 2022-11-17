@@ -31,15 +31,16 @@ export const DropdownProfileNavbar = () => {
 				<span className="mx-2">
 					{textName}
 				</span>
-				{hasSession
-					? <Image
+				{hasSession ?
+					<Image
 						className="w-8 h-8 m-1 rounded-full"
 						width={30}
 						height={30}
 						src={data?.user?.image || ''}
 						alt={data?.user?.name || ''}
 					/>
-					: <Icons name="AccountCircle" />
+					:
+					<Icons name="AccountCircle" />
 				}
 			</button>
 			{isOpen && data?.user?.name && (
