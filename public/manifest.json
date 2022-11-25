@@ -28,8 +28,5 @@
 			"sizes": "512x512",
 			"type": "image/png"
 		}
-	],
-	"launch_handler": {
-		"route_to": "existing-client-navigate"
-	}
+	]
 }
