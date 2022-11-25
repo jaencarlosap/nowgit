@@ -30,6 +30,6 @@
 		}
 	],
 	"launch_handler": {
-		"client_mode": "navigate-existing"
+		"route_to": "new-client"
 	}
 }
