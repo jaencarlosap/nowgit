@@ -54,7 +54,7 @@ export const Dashboard = () => {
 
 	return (
 		<div className="flex w-full flex-1 flex-col px-10">
-			<div className="flex space-x-5 w-1/3 mb-4 items-end">
+			<div className="flex space-x-5 mb-4 items-end">
 				<SelectField
 					isSearchable
 					placeholder="Select one repositorie"
