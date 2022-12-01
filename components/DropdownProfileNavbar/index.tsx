@@ -51,7 +51,7 @@ export const DropdownProfileNavbar = () => {
 					</div>
 					<ul className="py-1" aria-labelledby="user-menu-button">
 						<li onClick={handleOpen}>
-							<Link href='/dashboard' className='block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100'>
+							<Link href='/' className='block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100'>
 								Dashboard
 							</Link>
 						</li>
