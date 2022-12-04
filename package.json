@@ -5,6 +5,7 @@
     "email": "jeancarloss659@gmail.com",
     "url": "https://github.com/janper231"
   },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

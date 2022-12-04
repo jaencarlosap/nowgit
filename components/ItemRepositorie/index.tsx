@@ -16,7 +16,7 @@ export const ItemRepositorie = ({ data, handleDelete }: ItemRepositorieProps) =>
 	const pullRequests = repository?.pullRequests?.nodes?.sort((a, b) => {
 		return a.getTime() - b.getTime()
 	})
-	console.log(!pullRequests || pullRequests?.length === 0)
+
 	return (
 		<div className="min-w-lg w-full">
 			<div className="m-2 p-3 ">
