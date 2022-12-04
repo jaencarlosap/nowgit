@@ -1,11 +1,7 @@
-import { getCsrfToken, getProviders } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { IncomingMessage } from 'http'
+import { getProviders, signIn } from 'next-auth/react'
 import { Icons } from 'components'
 
-const Signin = ({ providersData, csrfTokenData }: any) => {
-	const { query } = useRouter()
-
+const Signin = ({ providersData }: any) => {
 	return (
 		<div className="flex flex-col justify-center items-center">
 			<div className="px-4 py-8 rounded-lg shadow-md bg-slate-50">
@@ -14,23 +10,14 @@ const Signin = ({ providersData, csrfTokenData }: any) => {
 				</div>
 				{Object.keys(providersData).map((providerKey, key) => (
 					<div key={key} className="mt-4 p-2 w-50 max-w-md rounded-lg shadow-md bg-white hover:bg-gray-100">
-						{
-							providersData[providerKey].type !== 'credentials' && (
-								<form action={providersData[providerKey].signinUrl} method="POST">
-									<input type="hidden" name="csrfToken" value={csrfTokenData} />
-									{providersData[providerKey].callbackUrl && (
-										<input type="hidden" name="callbackUrl" value={query.callbackUrl} />
-									)}
-
-									<button type="submit" className="w-100 flex px-2">
-										Sign in with {providersData[providerKey].name}
-										<span className="ml-2">
-											<Icons name={providersData[providerKey].name} />
-										</span>
-									</button>
-								</form>
-							)
-						}
+						{providersData[providerKey].type !== 'credentials' && (
+							<button onClick={() => signIn(providersData[providerKey].id)} className="w-100 flex px-2">
+								Sign in with {providersData[providerKey].name}
+								<span className="ml-2">
+									<Icons name={providersData[providerKey].name} />
+								</span>
+							</button>
+						)}
 					</div>
 				))}
 			</div>
@@ -38,13 +25,11 @@ const Signin = ({ providersData, csrfTokenData }: any) => {
 	)
 }
 
-Signin.getInitialProps = async ({ req }: { req: IncomingMessage }) => {
+export async function getServerSideProps() {
 	const providersData = await getProviders()
-	const csrfTokenData = await getCsrfToken({ req })
 
 	return {
-		providersData,
-		csrfTokenData
+		props: { providersData }
 	}
 }
 

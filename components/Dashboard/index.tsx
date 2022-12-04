@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import {
 	Icons,
 	ItemRepositorie,
-	SelectField
+	SelectField,
+	SelectRepositorie
 } from 'components'
 import { InfoPrProps, MainPrProps } from 'interfaces/infoPr'
 
-const Dashboard = () => {
+export const Dashboard = () => {
 	const [selectData, setSelectData] = useState<{ value: string; label: string; }[]>([])
 	const [listRepos, setListRepos] = useState<InfoPrProps[]>([])
 	const [selectedOption, setSelectedOption] = useState<unknown>(null)
@@ -19,25 +20,27 @@ const Dashboard = () => {
 		const prevLocal = JSON.parse(localStorage.getItem('repositories') || '[]')
 		localStorage.setItem('repositories', JSON.stringify([...prevLocal, dataToQuery]))
 		setSelectedOption(null)
-		setListRepos((beforeList) => ([
-			...beforeList,
+		setListRepos((prevList) => [
+			...prevList,
 			{ ...dataToQuery, repository }
-		]))
+		])
 	}
 
 	const getDataToList = async ({ ownerRepo, nameRepo }: MainPrProps) => {
-		return await (await fetch('/api/github/getRepositorie?' + new URLSearchParams({
-			owner: ownerRepo,
-			name: nameRepo
-		}))).json()
+		const params = new URLSearchParams({ owner: ownerRepo, name: nameRepo })
+		const query = await fetch(`/api/github/getRepositorie?${params}`)
+		return await query.json()
+	}
+
+	const handleDeleteRepoList = (name: string) => {
+		const repositoriesSaved = JSON.parse(localStorage.getItem('repositories') || '[]')
+		const newRepositorieList = repositoriesSaved.filter(({ nameRepo = '' }) => nameRepo !== name)
+		localStorage.setItem('repositories', JSON.stringify(newRepositorieList))
+		setListRepos(newRepositorieList)
 	}
 
 	useEffect(() => {
-		const handleGetData = async () => {
-			const repositories = await (await fetch('/api/github/getRepositories')).json()
-			const Data = repositories?.viewer?.repositories?.nodes?.map(({ nameWithOwner }: { nameWithOwner: string }) => {
-				return { value: nameWithOwner, label: nameWithOwner }
-			})
+		const handleGetEeachRepositorie = async () => {
 			let newList = []
 			const repositoriesSaved = JSON.parse(localStorage.getItem('repositories') || '[]')
 			for (const selectedOption of repositoriesSaved) {
@@ -45,20 +48,30 @@ const Dashboard = () => {
 				newList.push({ ...selectedOption, repository })
 			}
 			setListRepos(newList)
+		}
+
+		const handleGetData = async () => {
+			const query = await fetch('/api/github/getRepositories')
+			const repositories = await query.json()
+			const Data = repositories?.viewer?.repositories?.nodes?.map(({ nameWithOwner }: { nameWithOwner: string }) => {
+				return { value: nameWithOwner, label: nameWithOwner }
+			})
 			setSelectData(Data)
 		}
 
+		handleGetEeachRepositorie()
 		handleGetData()
 	}, [])
 
 	return (
 		<div className="flex w-full flex-1 flex-col px-10">
-			<div className="flex space-x-5 w-1/3 mb-4 items-end">
+			<div className="flex space-x-5 mb-4 items-end">
 				<SelectField
 					isSearchable
-					placeholder="Select one repositorie"
-					onChange={setSelectedOption}
 					options={selectData}
+					placeholder="Select one repositorie"
+					value={selectedOption}
+					onChange={setSelectedOption}
 				/>
 				<button
 					className="fill-white focus:outline-none rounded-full p-2 md:mr-0 bg-blue-600 hover:bg-blue-700"
@@ -67,24 +80,18 @@ const Dashboard = () => {
 					<Icons name="Add" />
 				</button>
 			</div>
-			<section className="flex flex-wrap justify-center">
-				{listRepos.length === 0 && (
-					<div className="flex-row w-full p-6 text-center">
-						<p className="text-4xl font-bold text-blue-400 hover:text-blue-700">
-							Select your favorite repositories
-						</p>
-						<p className="text-neutral-400 text-2lg ">
-							Remember that your current selection will be saved locally, but this will be temporary 😉
-						</p>
-						<p className="text-4xl"> 🚀 🌝 </p>
-					</div>
-				)}
+			<section className="flex flex-wrap">
+				{listRepos.length === 0 && <SelectRepositorie />}
 				{listRepos.map((repo, index) => {
-					return <ItemRepositorie data={repo} key={index} />
+					return (
+						<ItemRepositorie
+							key={index}
+							data={repo}
+							handleDelete={() => handleDeleteRepoList(repo.nameRepo)}
+						/>
+					)
 				})}
 			</section>
 		</div >
 	)
 }
-
-export default Dashboard

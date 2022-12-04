@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import {
 	useSession,
@@ -12,10 +13,11 @@ export const DropdownProfileNavbar = () => {
 	const { status, data } = useSession()
 	const [isOpen, setIsOpen] = useState(false)
 	const hasSession = status === 'authenticated'
+	const textName = hasSession ? data?.user?.name : 'Sign in'
 
 	const handleOpen = async () => {
 		if (hasSession) setIsOpen(!isOpen)
-		if (!hasSession) await signIn(undefined, { callbackUrl: '/dashboard' })
+		if (!hasSession) await signIn(undefined, { callbackUrl: '/' })
 	}
 
 	const handleLogout = async () => await signOut({ callbackUrl: '/' })
@@ -27,14 +29,18 @@ export const DropdownProfileNavbar = () => {
 				onClick={handleOpen}
 			>
 				<span className="mx-2">
-					{hasSession
-						? data?.user?.name
-						: 'Sign in'
-					}
+					{textName}
 				</span>
-				{hasSession
-					? <img className="w-8 h-8 m-1 rounded-full" src={data?.user?.image || ''} alt={data?.user?.name || ''} />
-					: <Icons name="AccountCircle" />
+				{hasSession ?
+					<Image
+						className="w-8 h-8 m-1 rounded-full"
+						width={30}
+						height={30}
+						src={data?.user?.image || ''}
+						alt={data?.user?.name || ''}
+					/>
+					:
+					<Icons name="AccountCircle" />
 				}
 			</button>
 			{isOpen && data?.user?.name && (
@@ -45,13 +51,13 @@ export const DropdownProfileNavbar = () => {
 					</div>
 					<ul className="py-1" aria-labelledby="user-menu-button">
 						<li onClick={handleOpen}>
-							<Link href='/dashboard'>
-								<a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+							<Link href='/' className='block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100'>
+								Dashboard
 							</Link>
 						</li>
 						<li onClick={handleLogout}>
-							<Link href='/'>
-								<a className="block py-2 px-4 text-sm text-red-400 hover:bg-gray-100">Sign out</a>
+							<Link href='/' className='block py-2 px-4 text-sm text-red-400 hover:bg-gray-100'>
+								Sign out
 							</Link>
 						</li>
 					</ul>
