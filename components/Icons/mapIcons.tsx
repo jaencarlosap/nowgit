@@ -1,4 +1,5 @@
-export * from './arrowRight'
 export * from './accountCircle'
-export * from './gitHub'
 export * from './add'
+export * from './arrowRight'
+export * from './delete'
+export * from './gitHub'

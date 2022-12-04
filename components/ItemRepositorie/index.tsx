@@ -5,7 +5,12 @@ import {
 } from 'components'
 import { InfoPrProps } from 'interfaces/infoPr'
 
-export const ItemRepositorie = ({ data }: { data: InfoPrProps }) => {
+export interface ItemRepositorieProps {
+	data: InfoPrProps;
+	handleDelete: () => void;
+}
+
+export const ItemRepositorie = ({ data, handleDelete }: ItemRepositorieProps) => {
 	const repository = data.repository
 	const urlRepo = repository?.url || ''
 	const pullRequests = repository?.pullRequests?.nodes?.sort((a, b) => {
@@ -44,6 +49,12 @@ export const ItemRepositorie = ({ data }: { data: InfoPrProps }) => {
 							/>
 						)
 					})}
+				</div>
+				{/* options */}
+				<div>
+					<div className='w-max rounded-full	hover:bg-red-200 p-2' onClick={handleDelete} >
+						<Icons name='Delete' />
+					</div>
 				</div>
 			</div>
 			<hr />

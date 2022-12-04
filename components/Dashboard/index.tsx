@@ -20,25 +20,27 @@ export const Dashboard = () => {
 		const prevLocal = JSON.parse(localStorage.getItem('repositories') || '[]')
 		localStorage.setItem('repositories', JSON.stringify([...prevLocal, dataToQuery]))
 		setSelectedOption(null)
-		setListRepos((beforeList) => ([
-			...beforeList,
+		setListRepos((prevList) => [
+			...prevList,
 			{ ...dataToQuery, repository }
-		]))
+		])
 	}
 
 	const getDataToList = async ({ ownerRepo, nameRepo }: MainPrProps) => {
-		return await (await fetch('/api/github/getRepositorie?' + new URLSearchParams({
-			owner: ownerRepo,
-			name: nameRepo
-		}))).json()
+		const params = new URLSearchParams({ owner: ownerRepo, name: nameRepo })
+		const query = await fetch(`/api/github/getRepositorie?${params}`)
+		return await query.json()
+	}
+
+	const handleDeleteRepoList = (name: string) => {
+		const repositoriesSaved = JSON.parse(localStorage.getItem('repositories') || '[]')
+		const newRepositorieList = repositoriesSaved.filter(({ nameRepo = '' }) => nameRepo !== name)
+		localStorage.setItem('repositories', JSON.stringify(newRepositorieList))
+		setListRepos(newRepositorieList)
 	}
 
 	useEffect(() => {
-		const handleGetData = async () => {
-			const repositories = await (await fetch('/api/github/getRepositories')).json()
-			const Data = repositories?.viewer?.repositories?.nodes?.map(({ nameWithOwner }: { nameWithOwner: string }) => {
-				return { value: nameWithOwner, label: nameWithOwner }
-			})
+		const handleGetEeachRepositorie = async () => {
 			let newList = []
 			const repositoriesSaved = JSON.parse(localStorage.getItem('repositories') || '[]')
 			for (const selectedOption of repositoriesSaved) {
@@ -46,9 +48,18 @@ export const Dashboard = () => {
 				newList.push({ ...selectedOption, repository })
 			}
 			setListRepos(newList)
+		}
+
+		const handleGetData = async () => {
+			const query = await fetch('/api/github/getRepositories')
+			const repositories = await query.json()
+			const Data = repositories?.viewer?.repositories?.nodes?.map(({ nameWithOwner }: { nameWithOwner: string }) => {
+				return { value: nameWithOwner, label: nameWithOwner }
+			})
 			setSelectData(Data)
 		}
 
+		handleGetEeachRepositorie()
 		handleGetData()
 	}, [])
 
@@ -71,7 +82,11 @@ export const Dashboard = () => {
 			<section className="flex flex-wrap">
 				{listRepos.length === 0 && <SelectRepositorie />}
 				{listRepos.map((repo, index) => {
-					return <ItemRepositorie data={repo} key={index} />
+					return <ItemRepositorie
+						key={index}
+						data={repo}
+						handleDelete={() => handleDeleteRepoList(repo.nameRepo)}
+					/>
 				})}
 			</section>
 		</div >
