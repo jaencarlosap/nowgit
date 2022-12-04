@@ -68,9 +68,10 @@ export const Dashboard = () => {
 			<div className="flex space-x-5 mb-4 items-end">
 				<SelectField
 					isSearchable
-					placeholder="Select one repositorie"
-					onChange={setSelectedOption}
 					options={selectData}
+					placeholder="Select one repositorie"
+					value={selectedOption}
+					onChange={setSelectedOption}
 				/>
 				<button
 					className="fill-white focus:outline-none rounded-full p-2 md:mr-0 bg-blue-600 hover:bg-blue-700"
@@ -82,11 +83,13 @@ export const Dashboard = () => {
 			<section className="flex flex-wrap">
 				{listRepos.length === 0 && <SelectRepositorie />}
 				{listRepos.map((repo, index) => {
-					return <ItemRepositorie
-						key={index}
-						data={repo}
-						handleDelete={() => handleDeleteRepoList(repo.nameRepo)}
-					/>
+					return (
+						<ItemRepositorie
+							key={index}
+							data={repo}
+							handleDelete={() => handleDeleteRepoList(repo.nameRepo)}
+						/>
+					)
 				})}
 			</section>
 		</div >

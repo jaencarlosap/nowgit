@@ -16,7 +16,7 @@ export const ItemRepositorie = ({ data, handleDelete }: ItemRepositorieProps) =>
 	const pullRequests = repository?.pullRequests?.nodes?.sort((a, b) => {
 		return a.getTime() - b.getTime()
 	})
-
+	console.log(!pullRequests || pullRequests?.length === 0)
 	return (
 		<div className="min-w-lg w-full">
 			<div className="m-2 p-3 ">
@@ -32,7 +32,7 @@ export const ItemRepositorie = ({ data, handleDelete }: ItemRepositorieProps) =>
 					</h5>
 				</a>
 				<div className="p-4 mb-3">
-					{pullRequests.length == 0 && (
+					{(!repository || pullRequests?.length == 0) && (
 						<p className='text-2xl font-bold text-gray-300 hover:text-gray-400'>
 							Currently, this repository dont have pull request with pending status 🥹 🎉
 						</p>
